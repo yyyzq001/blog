@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>九、vue的双向绑定原理及实现 | 叶一叶知秋的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/blog/favicon.jpg">
+    <meta name="description" content="记录">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.3e9d0216.css" as="style"><link rel="preload" href="/blog/assets/js/app.5886ec9f.js" as="script"><link rel="preload" href="/blog/assets/js/7.9b4f381a.js" as="script"><link rel="preload" href="/blog/assets/js/2.69cd9760.js" as="script"><link rel="preload" href="/blog/assets/js/1.98980572.js" as="script"><link rel="preload" href="/blog/assets/js/30.e2077cb7.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.e938f28c.js"><link rel="prefetch" href="/blog/assets/js/11.63bfed04.js"><link rel="prefetch" href="/blog/assets/js/14.b81f6507.js"><link rel="prefetch" href="/blog/assets/js/15.0518a7c2.js"><link rel="prefetch" href="/blog/assets/js/16.15f24638.js"><link rel="prefetch" href="/blog/assets/js/17.fcca0bb6.js"><link rel="prefetch" href="/blog/assets/js/18.ba87743d.js"><link rel="prefetch" href="/blog/assets/js/19.2b5a8509.js"><link rel="prefetch" href="/blog/assets/js/20.fcbfd224.js"><link rel="prefetch" href="/blog/assets/js/21.aac1fd84.js"><link rel="prefetch" href="/blog/assets/js/22.3d863433.js"><link rel="prefetch" href="/blog/assets/js/23.cf173af0.js"><link rel="prefetch" href="/blog/assets/js/24.4e6fd7a3.js"><link rel="prefetch" href="/blog/assets/js/25.6b13d4e5.js"><link rel="prefetch" href="/blog/assets/js/26.af087ac1.js"><link rel="prefetch" href="/blog/assets/js/27.a9bcc2df.js"><link rel="prefetch" href="/blog/assets/js/28.b94dacfd.js"><link rel="prefetch" href="/blog/assets/js/29.b7d6f58d.js"><link rel="prefetch" href="/blog/assets/js/3.2922218c.js"><link rel="prefetch" href="/blog/assets/js/31.5f2359c4.js"><link rel="prefetch" href="/blog/assets/js/32.2cbcece3.js"><link rel="prefetch" href="/blog/assets/js/33.6e991e20.js"><link rel="prefetch" href="/blog/assets/js/34.48a9b00d.js"><link rel="prefetch" href="/blog/assets/js/35.db07c8c9.js"><link rel="prefetch" href="/blog/assets/js/36.13a792e5.js"><link rel="prefetch" href="/blog/assets/js/37.a72e9356.js"><link rel="prefetch" href="/blog/assets/js/38.52456073.js"><link rel="prefetch" href="/blog/assets/js/39.b9d9d3ac.js"><link rel="prefetch" href="/blog/assets/js/4.673db558.js"><link rel="prefetch" href="/blog/assets/js/40.5de949c1.js"><link rel="prefetch" href="/blog/assets/js/41.520367f5.js"><link rel="prefetch" href="/blog/assets/js/42.9b749680.js"><link rel="prefetch" href="/blog/assets/js/43.4b0a5e94.js"><link rel="prefetch" href="/blog/assets/js/44.87f8e43a.js"><link rel="prefetch" href="/blog/assets/js/45.1399fa25.js"><link rel="prefetch" href="/blog/assets/js/46.a3a70ae7.js"><link rel="prefetch" href="/blog/assets/js/47.04210d4f.js"><link rel="prefetch" href="/blog/assets/js/48.c7c3090a.js"><link rel="prefetch" href="/blog/assets/js/49.6a2ea7cc.js"><link rel="prefetch" href="/blog/assets/js/5.e39c32db.js"><link rel="prefetch" href="/blog/assets/js/50.c7de72af.js"><link rel="prefetch" href="/blog/assets/js/51.7f759ac1.js"><link rel="prefetch" href="/blog/assets/js/52.44740562.js"><link rel="prefetch" href="/blog/assets/js/53.69a9d6e9.js"><link rel="prefetch" href="/blog/assets/js/6.fddb4ac0.js"><link rel="prefetch" href="/blog/assets/js/8.c871ece4.js"><link rel="prefetch" href="/blog/assets/js/9.fe3fb54c.js"><link rel="prefetch" href="/blog/assets/js/vendors~docsearch.cc3dd731.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.3e9d0216.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>叶一叶知秋的博客</h3> <p class="description" data-v-59e6cb88>记录</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><!----> <span class="site-name">叶一叶知秋的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="undefined"></i>
+  主 页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      记 录
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/blog/" class="nav-link router-link-active"><i class="undefined"></i>
+  文 章
+</a></li><li class="dropdown-item"><!----> <a href="/blog/notes/" class="nav-link"><i class="undefined"></i>
+  笔 记
+</a></li><li class="dropdown-item"><!----> <a href="/blog/interview/" class="nav-link"><i class="undefined"></i>
+  面 试
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      学 习
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/learn/" class="nav-link"><i class="undefined"></i>
+  资 料
+</a></li><li class="dropdown-item"><!----> <a href="/blog/tool/" class="nav-link"><i class="undefined"></i>
+  工 具
+</a></li><li class="dropdown-item"><!----> <a href="/blog/note/" class="nav-link"><i class="undefined"></i>
+  知 识
+</a></li><li class="dropdown-item"><!----> <a href="/blog/life/" class="nav-link"><i class="undefined"></i>
+  生 活
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/book/list.html" class="nav-link"><i class="undefined"></i>
+  阅 读
+</a></div><div class="nav-item"><a href="/blog/course/list.html" class="nav-link"><i class="undefined"></i>
+  教 程
+</a></div><div class="nav-item"><a href="https://github.com/yyyzq001/yinge" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><!----> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>15</h3> <h6 data-v-1fad0c41>Articles</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>0</h3> <h6 data-v-1fad0c41>Tags</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="undefined"></i>
+  主 页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      记 录
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/blog/" class="nav-link router-link-active"><i class="undefined"></i>
+  文 章
+</a></li><li class="dropdown-item"><!----> <a href="/blog/notes/" class="nav-link"><i class="undefined"></i>
+  笔 记
+</a></li><li class="dropdown-item"><!----> <a href="/blog/interview/" class="nav-link"><i class="undefined"></i>
+  面 试
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      学 习
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/learn/" class="nav-link"><i class="undefined"></i>
+  资 料
+</a></li><li class="dropdown-item"><!----> <a href="/blog/tool/" class="nav-link"><i class="undefined"></i>
+  工 具
+</a></li><li class="dropdown-item"><!----> <a href="/blog/note/" class="nav-link"><i class="undefined"></i>
+  知 识
+</a></li><li class="dropdown-item"><!----> <a href="/blog/life/" class="nav-link"><i class="undefined"></i>
+  生 活
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/book/list.html" class="nav-link"><i class="undefined"></i>
+  阅 读
+</a></div><div class="nav-item"><a href="/blog/course/list.html" class="nav-link"><i class="undefined"></i>
+  教 程
+</a></div><div class="nav-item"><a href="https://github.com/yyyzq001/yinge" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav> <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>📄 文 章</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/blog/" aria-current="page" class="sidebar-link">一、js实现类似百度地图的缩放拖动功能</a></li><li><a href="/blog/blog/2.html" class="sidebar-link">二、js中同步异步任务的顺序</a></li><li><a href="/blog/blog/3.html" class="sidebar-link">三、个人理解BFC</a></li><li><a href="/blog/blog/4.html" class="sidebar-link">四、个人主页搭建心得总结</a></li><li><a href="/blog/blog/5.html" class="sidebar-link">五、Vue  文件上传后的diy操作及二进制流blob文件的下载</a></li><li><a href="/blog/blog/6.html" class="sidebar-link">六、记element-ui的table表格的一个bug</a></li><li><a href="/blog/blog/7.html" class="sidebar-link">七、ES5有几种方式可以实现继承？分别有哪些优缺点？</a></li><li><a href="/blog/blog/8.html" class="sidebar-link">八、手写实现call(),apply()和bind()函数</a></li><li><a href="/blog/blog/9.html" aria-current="page" class="active sidebar-link">九、vue的双向绑定原理及实现</a></li><li><a href="/blog/blog/10.html" class="sidebar-link">十、webpack之loader和plugin简介</a></li><li><a href="/blog/blog/11.html" class="sidebar-link">十一、使用rem完成响应式页面设计</a></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88></h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">九、vue的双向绑定原理及实现</h1> <div data-v-8a445198><!----> <!----> <!----> <!----></div></div> <div class="theme-reco-content content__default"><h1 id="九、vue的双向绑定原理及实现"><a href="#九、vue的双向绑定原理及实现" class="header-anchor">#</a> 九、vue的双向绑定原理及实现</h1> <h2 id="前言"><a href="#前言" class="header-anchor">#</a> <strong>前言</strong></h2> <p>使用vue也好有一段时间了，虽然对其双向绑定原理也有了解个大概，但也没好好探究下其原理实现，所以这次特意花了几晚时间查阅资料和阅读相关源码，自己也实现一个简单版vue的双向绑定版本，先上个成果图来吸引各位：</p> <p>代码：                                   效果图：</p> <p><img src="/blog/assets/img/1.a2740a31.png" alt="img"> <img src="/blog/assets/img/7.526b29f1.gif" alt="img"></p> <p>是不是看起来跟vue的使用方式差不多？接下来就来从原理到实现，从简到难一步一步来实现这个SelfVue。由于本文只是为了学习和分享，所以只是简单实现下原理，并没有考虑太多情况和设计，如果大家有什么建议，欢迎提出来。</p> <p>本文主要介绍两大内容：</p> <ol><li><p>vue数据双向绑定的原理。</p></li> <li><p>实现简单版vue的过程，主要实现{{}}、v-model和事件指令的功能。</p></li></ol> <p>相关代码地址：https://github.com/canfoo/self-vue</p> <h2 id="vue数据双向绑定原理"><a href="#vue数据双向绑定原理" class="header-anchor">#</a> <strong>vue数据双向绑定原理</strong></h2> <p>vue数据双向绑定是通过数据劫持结合发布者-订阅者模式的方式来实现的，我们可以先来看一下通过控制台输出一个定义在vue初始化数据上的对象是个什么东西。</p> <p>代码：</p> <div class="language- extra-class"><pre class="language-text"><code>var vm = new Vue({
+    data: {
+        obj: {
+            a: 1
+        }
+    },
+    created: function () {
+        console.log(this.obj);
+    }
+});
+</code></pre></div><p>结果：</p> <p><img src="/blog/assets/img/2.80a7ffeb.png" alt="img"></p> <p>我们可以看到属性a有两个相对应的get和set方法，为什么会多出这两个方法呢？因为vue是通过Object.defineProperty()来实现数据劫持的。</p> <p>Object.defineProperty( )是用来做什么的？它可以来控制一个对象属性的一些特有操作，比如读写权、是否可以枚举，这里我们主要先来研究下它对应的两个描述属性get和set，如果还不熟悉其用法，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener noreferrer">请点击这里阅读更多用法<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</p> <p>在平常，我们很容易就可以打印出一个对象的属性数据：</p> <div class="language- extra-class"><pre class="language-text"><code>var Book = {
+  name: 'vue权威指南'
+};
+console.log(Book.name);  // vue权威指南
+</code></pre></div><p>如果想要在执行console.log(book.name)的同时，直接给书名加个书名号，那要怎么处理呢？或者说要通过什么监听对象 Book 的属性值。这时候Object.defineProperty( )就派上用场了，代码如下：</p> <div class="language- extra-class"><pre class="language-text"><code>var Book = {}
+var name = '';
+Object.defineProperty(Book, 'name', {
+  set: function (value) {
+    name = value;
+    console.log('你取了一个书名叫做' + value);
+  },
+  get: function () {
+    return '《' + name + '》'
+  }
+})
+ 
+Book.name = 'vue权威指南';  // 你取了一个书名叫做vue权威指南
+console.log(Book.name);  // 《vue权威指南》
+</code></pre></div><p>我们通过Object.defineProperty( )设置了对象Book的name属性，对其get和set进行重写操作，顾名思义，get就是在读取name属性这个值触发的函数，set就是在设置name属性这个值触发的函数，所以当执行 Book.name = 'vue权威指南' 这个语句时，控制台会打印出 &quot;你取了一个书名叫做vue权威指南&quot;，紧接着，当读取这个属性时，就会输出 &quot;《vue权威指南》&quot;，因为我们在get函数里面对该值做了加工了。如果这个时候我们执行下下面的语句，控制台会输出什么？</p> <div class="language- extra-class"><pre class="language-text"><code>console.log(Book);
+</code></pre></div><p>结果：</p> <p><img src="/blog/assets/img/3.d34ff3d7.png" alt="img"></p> <p>乍一看，是不是跟我们在上面打印vue数据长得有点类似，说明vue确实是通过这种方法来进行数据劫持的。接下来我们通过其原理来实现一个简单版的mvvm双向绑定代码。</p> <h2 id="思路分析"><a href="#思路分析" class="header-anchor">#</a> <strong>思路分析</strong></h2> <p>实现mvvm主要包含两个方面，数据变化更新视图，视图变化更新数据：</p> <p><img src="/blog/assets/img/4.05994e19.jpg" alt="img"></p> <p>关键点在于data如何更新view，因为view更新data其实可以通过事件监听即可，比如input标签监听 'input' 事件就可以实现了。所以我们着重来分析下，当数据改变，如何更新视图的。</p> <p>数据更新视图的重点是如何知道数据变了，只要知道数据变了，那么接下去的事都好处理。如何知道数据变了，其实上文我们已经给出答案了，就是通过Object.defineProperty( )对属性设置一个set函数，当数据改变了就会来触发这个函数，所以我们只要将一些需要更新的方法放在这里面就可以实现data更新view了。</p> <p><img src="/blog/assets/img/5.46abbd6d.jpg" alt="img"></p> <p>思路有了，接下去就是实现过程了。</p> <h2 id="实现过程"><a href="#实现过程" class="header-anchor">#</a> <strong>实现过程</strong></h2> <p>我们已经知道实现数据的双向绑定，首先要对数据进行劫持监听，所以我们需要设置一个监听器Observer，用来监听所有属性。如果属性发上变化了，就需要告诉订阅者Watcher看是否需要更新。因为订阅者是有很多个，所以我们需要有一个消息订阅器Dep来专门收集这些订阅者，然后在监听器Observer和订阅者Watcher之间进行统一管理的。接着，我们还需要有一个指令解析器Compile，对每个节点元素进行扫描和解析，将相关指令对应初始化成一个订阅者Watcher，并替换模板数据或者绑定相应的函数，此时当订阅者Watcher接收到相应属性的变化，就会执行对应的更新函数，从而更新视图。因此接下去我们执行以下3个步骤，实现数据的双向绑定：</p> <p>1.实现一个监听器Observer，用来劫持并监听所有属性，如果有变动的，就通知订阅者。</p> <p>2.实现一个订阅者Watcher，可以收到属性的变化通知并执行相应的函数，从而更新视图。</p> <p>3.实现一个解析器Compile，可以扫描和解析每个节点的相关指令，并根据初始化模板数据以及初始化相应的订阅器。</p> <p>流程图如下：</p> <p><img src="/blog/assets/img/6.c341bfa6.png" alt="img"></p> <h3 id="_1-实现一个observer"><a href="#_1-实现一个observer" class="header-anchor">#</a> <strong>1.实现一个Observer</strong></h3> <p>Observer是一个数据监听器，其实现核心方法就是前文所说的Object.defineProperty( )。如果要对所有属性都进行监听的话，那么可以通过递归方法遍历所有属性值，并对其进行Object.defineProperty( )处理。如下代码，实现了一个Observer。</p> <div class="language- extra-class"><pre class="language-text"><code>function defineReactive(data, key, val) {
+    observe(val); // 递归遍历所有子属性
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            return val;
+        },
+        set: function(newVal) {
+            val = newVal;
+            console.log('属性' + key + '已经被监听了，现在值为：“' + newVal.toString() + '”');
+        }
+    });
+}
+ 
+function observe(data) {
+    if (!data || typeof data !== 'object') {
+        return;
+    }
+    Object.keys(data).forEach(function(key) {
+        defineReactive(data, key, data[key]);
+    });
+};
+ 
+var library = {
+    book1: {
+        name: ''
+    },
+    book2: ''
+};
+observe(library);
+library.book1.name = 'vue权威指南'; // 属性name已经被监听了，现在值为：“vue权威指南”
+library.book2 = '没有此书籍';  // 属性book2已经被监听了，现在值为：“没有此书籍”
+</code></pre></div><p>思路分析中，需要创建一个可以容纳订阅者的消息订阅器Dep，订阅器Dep主要负责收集订阅者，然后再属性变化的时候执行对应订阅者的更新函数。所以显然订阅器需要有一个容器，这个容器就是list，将上面的Observer稍微改造下，植入消息订阅器：</p> <div class="language- extra-class"><pre class="language-text"><code>function defineReactive(data, key, val) {
+    observe(val); // 递归遍历所有子属性
+    var dep = new Dep(); 
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            if (是否需要添加订阅者) {
+                dep.addSub(watcher); // 在这里添加一个订阅者
+            }
+            return val;
+        },
+        set: function(newVal) {
+            if (val === newVal) {
+                return;
+            }
+            val = newVal;
+            console.log('属性' + key + '已经被监听了，现在值为：“' + newVal.toString() + '”');
+            dep.notify(); // 如果数据变化，通知所有订阅者
+        }
+    });
+}
+ 
+function Dep () {
+    this.subs = [];
+}
+Dep.prototype = {
+    addSub: function(sub) {
+        this.subs.push(sub);
+    },
+    notify: function() {
+        this.subs.forEach(function(sub) {
+            sub.update();
+        });
+    }
+};
+</code></pre></div><p>从代码上看，我们将订阅器Dep添加一个订阅者设计在getter里面，这是为了让Watcher初始化进行触发，因此需要判断是否要添加订阅者，至于具体设计方案，下文会详细说明的。在setter函数里面，如果数据变化，就会去通知所有订阅者，订阅者们就会去执行对应的更新的函数。到此为止，一个比较完整Observer已经实现了，接下来我们开始设计Watcher。</p> <h3 id="_2-实现watcher"><a href="#_2-实现watcher" class="header-anchor">#</a> <strong>2.实现Watcher</strong></h3> <p>订阅者Watcher在初始化的时候需要将自己添加进订阅器Dep中，那该如何添加呢？我们已经知道监听器Observer是在get函数执行了添加订阅者Wather的操作的，所以我们只要在订阅者Watcher初始化的时候触发对应的get函数去执行添加订阅者操作即可，那要如何触发get的函数，再简单不过了，只要获取对应的属性值就可以触发了，核心原因就是因为我们使用了Object.defineProperty( )进行数据监听。这里还有一个细节点需要处理，我们只要在订阅者Watcher初始化的时候才需要添加订阅者，所以需要做一个判断操作，因此可以在订阅器上做一下手脚：在Dep.target上缓存下订阅者，添加成功后再将其去掉就可以了。订阅者Watcher的实现如下：</p> <div class="language- extra-class"><pre class="language-text"><code>function Watcher(vm, exp, cb) {
+    this.cb = cb;
+    this.vm = vm;
+    this.exp = exp;
+    this.value = this.get();  // 将自己添加到订阅器的操作
+}
+ 
+Watcher.prototype = {
+    update: function() {
+        this.run();
+    },
+    run: function() {
+        var value = this.vm.data[this.exp];
+        var oldVal = this.value;
+        if (value !== oldVal) {
+            this.value = value;
+            this.cb.call(this.vm, value, oldVal);
+        }
+    },
+    get: function() {
+        Dep.target = this;  // 缓存自己
+        var value = this.vm.data[this.exp]  // 强制执行监听器里的get函数
+        Dep.target = null;  // 释放自己
+        return value;
+    }
+};
+</code></pre></div><p>这时候，我们需要对监听器Observer也做个稍微调整，主要是对应Watcher类原型上的get函数。需要调整地方在于defineReactive函数：</p> <div class="language- extra-class"><pre class="language-text"><code>function defineReactive(data, key, val) {
+    observe(val); // 递归遍历所有子属性
+    var dep = new Dep(); 
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            if (Dep.target) {.  // 判断是否需要添加订阅者
+                dep.addSub(Dep.target); // 在这里添加一个订阅者
+            }
+            return val;
+        },
+        set: function(newVal) {
+            if (val === newVal) {
+                return;
+            }
+            val = newVal;
+            console.log('属性' + key + '已经被监听了，现在值为：“' + newVal.toString() + '”');
+            dep.notify(); // 如果数据变化，通知所有订阅者
+        }
+    });
+}
+Dep.target = null;
+</code></pre></div><p>到此为止，简单版的Watcher设计完毕，这时候我们只要将Observer和Watcher关联起来，就可以实现一个简单的双向绑定数据了。因为这里没有还没有设计解析器Compile，所以对于模板数据我们都进行写死处理，假设模板上又一个节点，且id号为'name'，并且双向绑定的绑定的变量也为'name'，且是通过两个大双括号包起来（这里只是为了演示，暂时没什么用处），模板如下：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;body&gt;
+    &lt;h1 id=&quot;name&quot;&gt;{{name}}&lt;/h1&gt;
+&lt;/body&gt;
+</code></pre></div><p>这时候我们需要将Observer和Watcher关联起来：</p> <div class="language- extra-class"><pre class="language-text"><code>function SelfVue (data, el, exp) {
+    this.data = data;
+    observe(data);
+    el.innerHTML = this.data[exp];  // 初始化模板数据的值
+    new Watcher(this, exp, function (value) {
+        el.innerHTML = value;
+    });
+    return this;
+}
+</code></pre></div><p>然后在页面上new以下SelfVue类，就可以实现数据的双向绑定了：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;body&gt;
+    &lt;h1 id=&quot;name&quot;&gt;{{name}}&lt;/h1&gt;
+&lt;/body&gt;
+&lt;script src=&quot;js/observer.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/watcher.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/index.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    var ele = document.querySelector('#name');
+    var selfVue = new SelfVue({
+        name: 'hello world'
+    }, ele, 'name');
+ 
+    window.setTimeout(function () {
+        console.log('name值改变了');
+        selfVue.data.name = 'canfoo';
+    }, 2000);
+ 
+&lt;/script&gt;
+</code></pre></div><p>这时候打开页面，可以看到页面刚开始显示了是'hello world'，过了2s后就变成'canfoo'了。到这里，总算大功告成一半了，但是还有一个细节问题，我们在赋值的时候是这样的形式 '  selfVue.data.name = 'canfoo'  ' 而我们理想的形式是'  selfVue.name = 'canfoo'  '为了实现这样的形式，我们需要在new SelfVue的时候做一个代理处理，让访问selfVue的属性代理为访问selfVue.data的属性，实现原理还是使用Object.defineProperty( )对属性值再包一层：</p> <div class="language- extra-class"><pre class="language-text"><code>function SelfVue (data, el, exp) {
+    var self = this;
+    this.data = data;
+ 
+    Object.keys(data).forEach(function(key) {
+        self.proxyKeys(key);  // 绑定代理属性
+    });
+ 
+    observe(data);
+    el.innerHTML = this.data[exp];  // 初始化模板数据的值
+    new Watcher(this, exp, function (value) {
+        el.innerHTML = value;
+    });
+    return this;
+}
+ 
+SelfVue.prototype = {
+    proxyKeys: function (key) {
+        var self = this;
+        Object.defineProperty(this, key, {
+            enumerable: false,
+            configurable: true,
+            get: function proxyGetter() {
+                return self.data[key];
+            },
+            set: function proxySetter(newVal) {
+                self.data[key] = newVal;
+            }
+        });
+    }
+}
+</code></pre></div><p>这下我们就可以直接通过'  selfVue.name = 'canfoo'  '的形式来进行改变模板数据了。如果想要迫切看到现象的童鞋赶快来<a href="https://github.com/canfoo/self-vue/tree/master/v1" target="_blank" rel="noopener noreferrer">获取代码！<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h3 id="_3-实现compile"><a href="#_3-实现compile" class="header-anchor">#</a> <strong>3.实现Compile</strong></h3> <p>虽然上面已经实现了一个双向数据绑定的例子，但是整个过程都没有去解析dom节点，而是直接固定某个节点进行替换数据的，所以接下来需要实现一个解析器Compile来做解析和绑定工作。解析器Compile实现步骤：</p> <p>1.解析模板指令，并替换模板数据，初始化视图</p> <p>2.将模板指令对应的节点绑定对应的更新函数，初始化相应的订阅器</p> <p>为了解析模板，首先需要获取到dom元素，然后对含有dom元素上含有指令的节点进行处理，因此这个环节需要对dom操作比较频繁，所有可以先建一个fragment片段，将需要解析的dom节点存入fragment片段里再进行处理：</p> <div class="language- extra-class"><pre class="language-text"><code>function nodeToFragment (el) {
+    var fragment = document.createDocumentFragment();
+    var child = el.firstChild;
+    while (child) {
+        // 将Dom元素移入fragment中
+        fragment.appendChild(child);
+        child = el.firstChild
+    }
+    return fragment;
+}
+</code></pre></div><p>接下来需要遍历各个节点，对含有相关指定的节点进行特殊处理，这里咱们先处理最简单的情况，只对带有 '' 这种形式的指令进行处理，先简道难嘛，后面再考虑更多指令情况：</p> <div class="language- extra-class"><pre class="language-text"><code>function compileElement (el) {
+    var childNodes = el.childNodes;
+    var self = this;
+    [].slice.call(childNodes).forEach(function(node) {
+        var reg = /\{\{(.*)\}\}/;
+        var text = node.textContent;
+ 
+        if (self.isTextNode(node) &amp;&amp; reg.test(text)) {  // 判断是否是符合这种形式{{}}的指令
+            self.compileText(node, reg.exec(text)[1]);
+        }
+ 
+        if (node.childNodes &amp;&amp; node.childNodes.length) {
+            self.compileElement(node);  // 继续递归遍历子节点
+        }
+    });
+},
+function compileText (node, exp) {
+    var self = this;
+    var initText = this.vm[exp];
+    updateText(node, initText);  // 将初始化的数据初始化到视图中
+    new Watcher(this.vm, exp, function (value) {  // 生成订阅器并绑定更新函数
+        self.updateText(node, value);
+    });
+},
+function updateText (node, value) {
+    node.textContent = typeof value == 'undefined' ? '' : value;
+}
+</code></pre></div><p>获取到最外层节点后，调用compileElement函数，对所有子节点进行判断，如果节点是文本节点且匹配{{}}这种形式指令的节点就开始进行编译处理，编译处理首先需要初始化视图数据，对应上面所说的步骤1，接下去需要生成一个并绑定更新函数的订阅器，对应上面所说的步骤2。这样就完成指令的解析、初始化、编译三个过程，一个解析器Compile也就可以正常的工作了。为了将解析器Compile与监听器Observer和订阅者Watcher关联起来，我们需要再修改一下类SelfVue函数：</p> <div class="language- extra-class"><pre class="language-text"><code>function SelfVue (options) {
+    var self = this;
+    this.vm = this;
+    this.data = options;
+ 
+    Object.keys(this.data).forEach(function(key) {
+        self.proxyKeys(key);
+    });
+ 
+    observe(this.data);
+    new Compile(options, this.vm);
+    return this;
+}
+</code></pre></div><p>更改后，我们就不要像之前通过传入固定的元素值进行双向绑定了，可以随便命名各种变量进行双向绑定了：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;h2&gt;{{title}}&lt;/h2&gt;
+        &lt;h1&gt;{{name}}&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;script src=&quot;js/observer.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/watcher.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/compile.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/index.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+ 
+    var selfVue = new SelfVue({
+        el: '#app',
+        data: {
+            title: 'hello world',
+            name: ''
+        }
+    });
+ 
+    window.setTimeout(function () {
+        selfVue.title = '你好';
+    }, 2000);
+ 
+    window.setTimeout(function () {
+        selfVue.name = 'canfoo';
+    }, 2500);
+ 
+&lt;/script&gt;
+</code></pre></div><p>如上代码，在页面上可观察到，刚开始titile和name分别被初始化为 'hello world' 和空，2s后title被替换成 '你好' 3s后name被替换成 'canfoo' 了。废话不多说，再给你们来一个这个版本的代码（v2），<a href="https://github.com/canfoo/self-vue/tree/master/v2" target="_blank" rel="noopener noreferrer">获取代码！<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>到这里，一个数据双向绑定功能已经基本完成了，接下去就是需要完善更多指令的解析编译，在哪里进行更多指令的处理呢？答案很明显，只要在上文说的compileElement函数加上对其他指令节点进行判断，然后遍历其所有属性，看是否有匹配的指令的属性，如果有的话，就对其进行解析编译。这里我们再添加一个v-model指令和事件指令的解析编译，对于这些节点我们使用函数compile进行解析处理：</p> <div class="language- extra-class"><pre class="language-text"><code>function compile (node) {
+    var nodeAttrs = node.attributes;
+    var self = this;
+    Array.prototype.forEach.call(nodeAttrs, function(attr) {
+        var attrName = attr.name;
+        if (self.isDirective(attrName)) {
+            var exp = attr.value;
+            var dir = attrName.substring(2);
+            if (self.isEventDirective(dir)) {  // 事件指令
+                self.compileEvent(node, self.vm, exp, dir);
+            } else {  // v-model 指令
+                self.compileModel(node, self.vm, exp, dir);
+            }
+            node.removeAttribute(attrName);
+        }
+    });
+}
+</code></pre></div><p>上面的compile函数是挂载Compile原型上的，它首先遍历所有节点属性，然后再判断属性是否是指令属性，如果是的话再区分是哪种指令，再进行相应的处理，处理方法相对来说比较简单，这里就不再列出来，想要马上看阅读代码的同学可以马上<a href="https://github.com/canfoo/self-vue/tree/master/v3" target="_blank" rel="noopener noreferrer">点击这里获取。<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>最后我们在稍微改造下类SelfVue，使它更像vue的用法：</p> <div class="language- extra-class"><pre class="language-text"><code>function SelfVue (options) {
+    var self = this;
+    this.data = options.data;
+    this.methods = options.methods;
+ 
+    Object.keys(this.data).forEach(function(key) {
+        self.proxyKeys(key);
+    });
+ 
+    observe(this.data);
+    new Compile(options.el, this);
+    options.mounted.call(this); // 所有事情处理好后执行mounted函数
+}
+</code></pre></div><p>这时候我们可以来真正测试了，在页面上设置如下东西：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;h2&gt;{{title}}&lt;/h2&gt;
+        &lt;input v-model=&quot;name&quot;&gt;
+        &lt;h1&gt;{{name}}&lt;/h1&gt;
+        &lt;button v-on:click=&quot;clickMe&quot;&gt;click me!&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;script src=&quot;js/observer.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/watcher.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/compile.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/index.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+ 
+     new SelfVue({
+        el: '#app',
+        data: {
+            title: 'hello world',
+            name: 'canfoo'
+        },
+        methods: {
+            clickMe: function () {
+                this.title = 'hello world';
+            }
+        },
+        mounted: function () {
+            window.setTimeout(() =&gt; {
+                this.title = '你好';
+            }, 1000);
+        }
+    });
+ 
+&lt;/script&gt;
+</code></pre></div><p>是不是看起来跟vue的使用方法一样，哈，真正的大功告成！想要代码，直接<a href="https://github.com/canfoo/self-vue/tree/master/v3" target="_blank" rel="noopener noreferrer">点击这里获取！<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>现象还没描述？直接上图！！！请观赏</p> <p><img src="/blog/assets/img/7.526b29f1.gif" alt="img"></p> <p>其实这个效果图，就是本文开头贴出来的效果图了，前文说着要带着大家实现，所以就在这里把图再贴一次了，这叫首尾呼应嘛。</p></div></section> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/blog/blog/8.html" class="prev">
+          八、手写实现call(),apply()和bind()函数
+        </a></span> <span class="next"><a href="/blog/blog/10.html">
+          十、webpack之loader和plugin简介
+        </a></span></p></div> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/blog/blog/9.html#前言" class="sidebar-link reco-side-前言" data-v-b57cc07c>前言</a></li><li class="level-2" data-v-b57cc07c><a href="/blog/blog/9.html#vue数据双向绑定原理" class="sidebar-link reco-side-vue数据双向绑定原理" data-v-b57cc07c>vue数据双向绑定原理</a></li><li class="level-2" data-v-b57cc07c><a href="/blog/blog/9.html#思路分析" class="sidebar-link reco-side-思路分析" data-v-b57cc07c>思路分析</a></li><li class="level-2" data-v-b57cc07c><a href="/blog/blog/9.html#实现过程" class="sidebar-link reco-side-实现过程" data-v-b57cc07c>实现过程</a></li><li class="level-3" data-v-b57cc07c><a href="/blog/blog/9.html#_1-实现一个observer" class="sidebar-link reco-side-_1-实现一个observer" data-v-b57cc07c>1.实现一个Observer</a></li><li class="level-3" data-v-b57cc07c><a href="/blog/blog/9.html#_2-实现watcher" class="sidebar-link reco-side-_2-实现watcher" data-v-b57cc07c>2.实现Watcher</a></li><li class="level-3" data-v-b57cc07c><a href="/blog/blog/9.html#_3-实现compile" class="sidebar-link reco-side-_3-实现compile" data-v-b57cc07c>3.实现Compile</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/blog/assets/js/app.5886ec9f.js" defer></script><script src="/blog/assets/js/7.9b4f381a.js" defer></script><script src="/blog/assets/js/2.69cd9760.js" defer></script><script src="/blog/assets/js/1.98980572.js" defer></script><script src="/blog/assets/js/30.e2077cb7.js" defer></script>
+  </body>
+</html>

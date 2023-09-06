@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>二、js中同步异步任务的顺序 | 叶一叶知秋的博客</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/blog/favicon.jpg">
+    <meta name="description" content="记录">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.3e9d0216.css" as="style"><link rel="preload" href="/blog/assets/js/app.5886ec9f.js" as="script"><link rel="preload" href="/blog/assets/js/7.9b4f381a.js" as="script"><link rel="preload" href="/blog/assets/js/2.69cd9760.js" as="script"><link rel="preload" href="/blog/assets/js/1.98980572.js" as="script"><link rel="preload" href="/blog/assets/js/42.9b749680.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.e938f28c.js"><link rel="prefetch" href="/blog/assets/js/11.63bfed04.js"><link rel="prefetch" href="/blog/assets/js/14.b81f6507.js"><link rel="prefetch" href="/blog/assets/js/15.0518a7c2.js"><link rel="prefetch" href="/blog/assets/js/16.15f24638.js"><link rel="prefetch" href="/blog/assets/js/17.fcca0bb6.js"><link rel="prefetch" href="/blog/assets/js/18.ba87743d.js"><link rel="prefetch" href="/blog/assets/js/19.2b5a8509.js"><link rel="prefetch" href="/blog/assets/js/20.fcbfd224.js"><link rel="prefetch" href="/blog/assets/js/21.aac1fd84.js"><link rel="prefetch" href="/blog/assets/js/22.3d863433.js"><link rel="prefetch" href="/blog/assets/js/23.cf173af0.js"><link rel="prefetch" href="/blog/assets/js/24.4e6fd7a3.js"><link rel="prefetch" href="/blog/assets/js/25.6b13d4e5.js"><link rel="prefetch" href="/blog/assets/js/26.af087ac1.js"><link rel="prefetch" href="/blog/assets/js/27.a9bcc2df.js"><link rel="prefetch" href="/blog/assets/js/28.b94dacfd.js"><link rel="prefetch" href="/blog/assets/js/29.b7d6f58d.js"><link rel="prefetch" href="/blog/assets/js/3.2922218c.js"><link rel="prefetch" href="/blog/assets/js/30.e2077cb7.js"><link rel="prefetch" href="/blog/assets/js/31.5f2359c4.js"><link rel="prefetch" href="/blog/assets/js/32.2cbcece3.js"><link rel="prefetch" href="/blog/assets/js/33.6e991e20.js"><link rel="prefetch" href="/blog/assets/js/34.48a9b00d.js"><link rel="prefetch" href="/blog/assets/js/35.db07c8c9.js"><link rel="prefetch" href="/blog/assets/js/36.13a792e5.js"><link rel="prefetch" href="/blog/assets/js/37.a72e9356.js"><link rel="prefetch" href="/blog/assets/js/38.52456073.js"><link rel="prefetch" href="/blog/assets/js/39.b9d9d3ac.js"><link rel="prefetch" href="/blog/assets/js/4.673db558.js"><link rel="prefetch" href="/blog/assets/js/40.5de949c1.js"><link rel="prefetch" href="/blog/assets/js/41.520367f5.js"><link rel="prefetch" href="/blog/assets/js/43.4b0a5e94.js"><link rel="prefetch" href="/blog/assets/js/44.87f8e43a.js"><link rel="prefetch" href="/blog/assets/js/45.1399fa25.js"><link rel="prefetch" href="/blog/assets/js/46.a3a70ae7.js"><link rel="prefetch" href="/blog/assets/js/47.04210d4f.js"><link rel="prefetch" href="/blog/assets/js/48.c7c3090a.js"><link rel="prefetch" href="/blog/assets/js/49.6a2ea7cc.js"><link rel="prefetch" href="/blog/assets/js/5.e39c32db.js"><link rel="prefetch" href="/blog/assets/js/50.c7de72af.js"><link rel="prefetch" href="/blog/assets/js/51.7f759ac1.js"><link rel="prefetch" href="/blog/assets/js/52.44740562.js"><link rel="prefetch" href="/blog/assets/js/53.69a9d6e9.js"><link rel="prefetch" href="/blog/assets/js/6.fddb4ac0.js"><link rel="prefetch" href="/blog/assets/js/8.c871ece4.js"><link rel="prefetch" href="/blog/assets/js/9.fe3fb54c.js"><link rel="prefetch" href="/blog/assets/js/vendors~docsearch.cc3dd731.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.3e9d0216.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>叶一叶知秋的博客</h3> <p class="description" data-v-59e6cb88>记录</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><!----> <span class="site-name">叶一叶知秋的博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="undefined"></i>
+  主 页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      记 录
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/blog/" class="nav-link router-link-active"><i class="undefined"></i>
+  文 章
+</a></li><li class="dropdown-item"><!----> <a href="/blog/notes/" class="nav-link"><i class="undefined"></i>
+  笔 记
+</a></li><li class="dropdown-item"><!----> <a href="/blog/interview/" class="nav-link"><i class="undefined"></i>
+  面 试
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      学 习
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/learn/" class="nav-link"><i class="undefined"></i>
+  资 料
+</a></li><li class="dropdown-item"><!----> <a href="/blog/tool/" class="nav-link"><i class="undefined"></i>
+  工 具
+</a></li><li class="dropdown-item"><!----> <a href="/blog/note/" class="nav-link"><i class="undefined"></i>
+  知 识
+</a></li><li class="dropdown-item"><!----> <a href="/blog/life/" class="nav-link"><i class="undefined"></i>
+  生 活
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/book/list.html" class="nav-link"><i class="undefined"></i>
+  阅 读
+</a></div><div class="nav-item"><a href="/blog/course/list.html" class="nav-link"><i class="undefined"></i>
+  教 程
+</a></div><div class="nav-item"><a href="https://github.com/yyyzq001/yinge" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><!----> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>15</h3> <h6 data-v-1fad0c41>Articles</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>0</h3> <h6 data-v-1fad0c41>Tags</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="undefined"></i>
+  主 页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      记 录
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/blog/" class="nav-link router-link-active"><i class="undefined"></i>
+  文 章
+</a></li><li class="dropdown-item"><!----> <a href="/blog/notes/" class="nav-link"><i class="undefined"></i>
+  笔 记
+</a></li><li class="dropdown-item"><!----> <a href="/blog/interview/" class="nav-link"><i class="undefined"></i>
+  面 试
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      学 习
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog/learn/" class="nav-link"><i class="undefined"></i>
+  资 料
+</a></li><li class="dropdown-item"><!----> <a href="/blog/tool/" class="nav-link"><i class="undefined"></i>
+  工 具
+</a></li><li class="dropdown-item"><!----> <a href="/blog/note/" class="nav-link"><i class="undefined"></i>
+  知 识
+</a></li><li class="dropdown-item"><!----> <a href="/blog/life/" class="nav-link"><i class="undefined"></i>
+  生 活
+</a></li></ul></div></div><div class="nav-item"><a href="/blog/book/list.html" class="nav-link"><i class="undefined"></i>
+  阅 读
+</a></div><div class="nav-item"><a href="/blog/course/list.html" class="nav-link"><i class="undefined"></i>
+  教 程
+</a></div><div class="nav-item"><a href="https://github.com/yyyzq001/yinge" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav> <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>📄 文 章</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/blog/" aria-current="page" class="sidebar-link">一、js实现类似百度地图的缩放拖动功能</a></li><li><a href="/blog/blog/2.html" aria-current="page" class="active sidebar-link">二、js中同步异步任务的顺序</a></li><li><a href="/blog/blog/3.html" class="sidebar-link">三、个人理解BFC</a></li><li><a href="/blog/blog/4.html" class="sidebar-link">四、个人主页搭建心得总结</a></li><li><a href="/blog/blog/5.html" class="sidebar-link">五、Vue  文件上传后的diy操作及二进制流blob文件的下载</a></li><li><a href="/blog/blog/6.html" class="sidebar-link">六、记element-ui的table表格的一个bug</a></li><li><a href="/blog/blog/7.html" class="sidebar-link">七、ES5有几种方式可以实现继承？分别有哪些优缺点？</a></li><li><a href="/blog/blog/8.html" class="sidebar-link">八、手写实现call(),apply()和bind()函数</a></li><li><a href="/blog/blog/9.html" class="sidebar-link">九、vue的双向绑定原理及实现</a></li><li><a href="/blog/blog/10.html" class="sidebar-link">十、webpack之loader和plugin简介</a></li><li><a href="/blog/blog/11.html" class="sidebar-link">十一、使用rem完成响应式页面设计</a></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88></h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2023
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">二、js中同步异步任务的顺序</h1> <div data-v-8a445198><!----> <!----> <!----> <!----></div></div> <div class="theme-reco-content content__default"><h1 id="二、js中同步异步任务的顺序"><a href="#二、js中同步异步任务的顺序" class="header-anchor">#</a> 二、js中同步异步任务的顺序</h1> <p>首先,我们可以确定js是一门单线程的语言,即能够执行任务的道路只有一条,而这条道路上面改执行怎样的任务,就需要有一个顺序来区分.
+js的任务用大的分类可分为同步任务和异步任务,
+同步任务:即排队等待,从上往下执行,只有前面的任务完成后,你才能开始任务
+异步任务:如果js只有同步的过程,那么意味着,只要有一个任务卡死了,那么你后面的任务都阻塞了,所以异步处理就有了必要性.js的异步处理是通过事件循环实现的(event loop).
+一般情况下是同步任务执行完成后才开始执行异步任务</p> <p>按照这种分类方式:JS的执行机制是</p> <p>首先判断js代码是同步还是异步,同步就进入主进程,异步就进入event table
+异步任务在event table中注册函数,当满足触发条件后,被推入event queue
+同步任务进入主线程后一直执行,直到主线程空闲时,才会去event queue中查看是否有可执行的异步任务,如果有就推入主进程中
+以上三步循环执行,这就是event loop</p> <h2 id="_1-js异步任务的顺序理解"><a href="#_1-js异步任务的顺序理解" class="header-anchor">#</a> 1. js异步任务的顺序理解</h2> <p>将js加载执行任务顺序再进一步的划分的话,就必须弄清楚异步任务的执行顺序
+异步任务的执行主要是会分为宏任务和微任务
+宏任务: setTimeout setInterval  setImmediate等甚至还有script
+微任务: Promise.then  Promise.catch等</p> <p>一般来说,一段代码函数的执行,便是主线程的一个任务的开始,当任务执行遇到setTimeout等宏任务时,便将宏任务放到宏任务的队列中,遇到微任务,则将其丢到微任务队列中,等主线程任务中执行完成后,再开始判断两个队列的执行顺序.
+一开始对比队列时,只要有微任务,优先微任务队列,微任务队列完成后,再开始执行宏任务.
+每次宏任务执行完一个后便会检查微任务队列,微任务队列如果有任务,则会优先执行微任务队列的任务,直到目前微任务队列执行完成后,再执行下一宏任务.</p> <p>语言表述往往比较抽象,举一个实际例子:</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>首先先说结果:</p> <div class="language- extra-class"><pre class="language-text"><code>1 ,9 ,5 ,0 ,6 ,2 ,7 ,4 ,8 ,3
+</code></pre></div><p>这个结果的过程需要细说一下,首先执行的是function的主函数,遇到第一个</p> <div class="language- extra-class"><pre class="language-text"><code>setTimeout(() =&gt; {
+        console.log(0);
+    });
+</code></pre></div><p>放到宏任务队列里面去,然后遇到Promise,</p> <div class="language- extra-class"><pre class="language-text"><code> new Promise(resolve =&gt; {
+        console.log(1);
+        setTimeout(() =&gt; {
+            resolve();
+            Promise.resolve().then(() =&gt; {
+                console.log(2);
+                setTimeout(() =&gt; console.log(3));
+                Promise.resolve().then(() =&gt; console.log(4));
+            });
+        });
+        Promise.resolve().then(() =&gt; console.log(5));
+    })
+</code></pre></div><p><strong>由于Promise优先级较高,而且是new promise</strong> 会立即执行所以直接执行输出1,再然后遇到setTimeout函数</p> <div class="language- extra-class"><pre class="language-text"><code> setTimeout(() =&gt; {
+            resolve();
+            Promise.resolve().then(() =&gt; {
+                console.log(2);
+                setTimeout(() =&gt; console.log(3));
+                Promise.resolve().then(() =&gt; console.log(4));
+            });
+        });
+</code></pre></div><p>,再将其丢到宏任务队列里面去,再往下执行,遇到Promise.then函数</p> <div class="language- extra-class"><pre class="language-text"><code>Promise.resolve().then(() =&gt; console.log(5));
+</code></pre></div><p>将其丢到微任务队列中,然后回到主线程,执行console.log(9),	输出9,执行完成后即该任务完成,然后查看两个任务队列,发现微任务队列有任务,所以执行微任务</p> <div class="language- extra-class"><pre class="language-text"><code>Promise.resolve().then(() =&gt; console.log(5));
+</code></pre></div><p>输出5,微任务执行完成后,没有后续微任务了,则开始执行宏任务</p> <div class="language- extra-class"><pre class="language-text"><code>setTimeout(() =&gt; {
+        console.log(0);
+    });
+</code></pre></div><p>输出0
+宏任务执行完成后,回头一瞅,发现还是没有微任务,则继续执行宏任务</p> <div class="language- extra-class"><pre class="language-text"><code> setTimeout(() =&gt; {
+            resolve();
+            Promise.resolve().then(() =&gt; {
+                console.log(2);
+                setTimeout(() =&gt; console.log(3));
+                Promise.resolve().then(() =&gt; console.log(4));
+            });
+        });
+</code></pre></div><p>这个宏任务一进去,看到了resolve,好巧,直接把.then</p> <div class="language- extra-class"><pre class="language-text"><code>  }).then(() =&gt; {
+        console.log(6);
+        Promise.resolve().then(() =&gt; console.log(7));
+        setTimeout(() =&gt; console.log(8));
+    });
+</code></pre></div><p>丢到微任务,再执行,又看到了一个Promise.then</p> <div class="language- extra-class"><pre class="language-text"><code>     Promise.resolve().then(() =&gt; {
+                console.log(2);
+                setTimeout(() =&gt; console.log(3));
+                Promise.resolve().then(() =&gt; console.log(4));
+            });
+</code></pre></div><p>巧了,前面兄弟和你一样,再微任务队列走起,然后宏任务完成,再开始看两个队列,一看,里面微任务里面有两个任务,宏任务都不用看了,先干完微任务再说,第一个微任务</p> <div class="language- extra-class"><pre class="language-text"><code> }).then(() =&gt; {
+        console.log(6);
+        Promise.resolve().then(() =&gt; console.log(7));
+        setTimeout(() =&gt; console.log(8));
+    });
+</code></pre></div><p>直接先输出6,然后把Promise.then</p> <div class="language- extra-class"><pre class="language-text"><code>  Promise.resolve().then(() =&gt; console.log(7));
+</code></pre></div><p>丢到微任务里去,又一个setTimeout</p> <div class="language- extra-class"><pre class="language-text"><code>setTimeout(() =&gt; console.log(8));
+</code></pre></div><p>宏任务走起,然后这个微任务完了,下一个微任务</p> <div class="language- extra-class"><pre class="language-text"><code>     Promise.resolve().then(() =&gt; {
+                console.log(2);
+                setTimeout(() =&gt; console.log(3));
+                Promise.resolve().then(() =&gt; console.log(4));
+            });
+</code></pre></div><p>老规矩,直接输出2,setTimeout 3丢宏任务,Promise,then 4丢微任务,在执行下一个微任务</p> <div class="language- extra-class"><pre class="language-text"><code>  Promise.resolve().then(() =&gt; console.log(7));
+</code></pre></div><p>输出7,再看看微任务还有吗,刚刚又来了个</p> <div class="language- extra-class"><pre class="language-text"><code> Promise.resolve().then(() =&gt; console.log(4));
+</code></pre></div><p>输出4,然后微任务没了,终于可以开始宏任务了,然后宏任务2连</p> <div class="language- extra-class"><pre class="language-text"><code>setTimeout(() =&gt; console.log(8));
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code> setTimeout(() =&gt; console.log(3));
+</code></pre></div><p>输出8 ,3</p> <p>Prefect!  虽然这个文本差点把自己绕进去了,最好旁边用个纸记一下两个队列发生了啥比较好理解.
+这些差不多就是宏微任务的顺序了,基本在微任务面前,宏任务就先靠边.
+new promise 会立即执行
+then会分发到微任务
+遇到 console 立即执行
+<img src="https://upload-images.jianshu.io/upload_images/23550538-b5d5d6433297ad76?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="在这里插入图片描述">
+其实还有process.nextTick等微任务,他的优先级比Promise还高.在队列中同样的函数还可以顺序执行,但不同的函数有时候还要判断优先级,执行顺序会更加复杂.</p> <p>来个复杂例子发散下思维</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'2'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    process<span class="token punctuation">.</span><span class="token function">nextTick</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'4'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'5'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+process<span class="token punctuation">.</span><span class="token function">nextTick</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'6'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'7'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'8'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'9'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    process<span class="token punctuation">.</span><span class="token function">nextTick</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'10'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'11'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'12'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">// 1,7,6,8,2,4,3,5,9,11,10,12</span>
+</code></pre></div><p><em><strong>ok 第一篇文章完成</strong></em></p> <p>##更新补充
+实际上,还有一个异步任务那就是async和await,顺序执行是遇到await就会立即执行,类似于new一个promise,但是如果在await函数执行过程中被打断比如遇到另一个await函数,则当前await的后续代码会阻塞,直到执行微任务队列之前会继续执行完成.</p> <div class="language- extra-class"><pre class="language-text"><code>async function async1() {
+    console.log('async1 start');
+    await async2();
+    console.log('async1 end');
+}
+async function async2() {
+    console.log('async2');
+}
+console.log('script start');
+setTimeout(function () {
+    console.log('setTimeout1');
+}, 200);
+setTimeout(function () {
+    console.log('setTimeout2');
+    new Promise(function (resolve) {
+        resolve();
+    }).then(function () {
+        console.log('then1')
+    })
+    new Promise(function (resolve) {
+        console.log('Promise1');
+        resolve();
+    }).then(function () {
+        console.log('then2')
+    })
+}, 0)
+async1();
+new Promise(function (resolve) {
+    console.log('promise2');
+    resolve();
+}).then(function () {
+    console.log('then3');
+});
+console.log('script end');
+//结果
+script start
+async1 start
+async2
+promise2
+script end
+async1 end
+then3
+setTimeout2
+Promise1
+then1
+then2
+setTimeout1
+</code></pre></div></div></section> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/blog/blog/" class="prev router-link-active">
+          一、js实现类似百度地图的缩放拖动功能
+        </a></span> <span class="next"><a href="/blog/blog/3.html">
+          三、个人理解BFC
+        </a></span></p></div> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/blog/blog/2.html#_1-js异步任务的顺序理解" class="sidebar-link reco-side-_1-js异步任务的顺序理解" data-v-b57cc07c>1. js异步任务的顺序理解</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/blog/assets/js/app.5886ec9f.js" defer></script><script src="/blog/assets/js/7.9b4f381a.js" defer></script><script src="/blog/assets/js/2.69cd9760.js" defer></script><script src="/blog/assets/js/1.98980572.js" defer></script><script src="/blog/assets/js/42.9b749680.js" defer></script>
+  </body>
+</html>
